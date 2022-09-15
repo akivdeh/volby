@@ -114,21 +114,20 @@ for (procent_secteno in seq(start, stop, by=5)) {
 
   data_melted$e_observed = data_melted$cluster_weight*data_melted$zapsani_volici*data_melted$secteno
   data_melted[is.na(data_melted$e_observed), 'e_observed'] = 0
-  #nove!!!!
-  data_melted$f_observed = ifelse(data_melted$secteno==1,data_melted$e_observed,data_melted$f)
+  #data_melted$f_observed = ifelse(data_melted$secteno==1,data_melted$e_observed,data_melted$f)
   
   # Navážit výsledky z okrsku váhou clusterů
   data_melted[, name_kstrana] = data_melted[, name_kstrana]*data_melted$cluster_weight
   
   # Agregace
-  vysledky_clustery = aggregate(. ~ cluster_name, data_melted[, c("cluster_name", "f_expected", "f_observed", "e_expected", "e_observed", name_kstrana)], sum)
+  #vysledky_clustery = aggregate(. ~ cluster_name, data_melted[, c("cluster_name", "f_expected", "f_observed", "e_expected", "e_observed", name_kstrana)], sum)
   
   
-  #vysledky_clustery = aggregate(. ~ cluster_name, data_melted[, c("cluster_name", "f_expected", "e_expected", "e_observed", name_kstrana)], sum)
-  vysledky_clustery[vysledky_clustery["e_expected"]==0, 'e_expected'] = 1 #můžu dát libovolnou hodnotu, jde o situaci, kdy se v clusteru nenašly hlasy, tedy je jedno, jakou váhou pak tyto žádné hlasy budu vážit
+  vysledky_clustery = aggregate(. ~ cluster_name, data_melted[, c("cluster_name", "f_expected", "e_expected", "e_observed", name_kstrana)], sum)
+  #vysledky_clustery[vysledky_clustery["e_expected"]==0, 'e_expected'] = 1 #můžu dát libovolnou hodnotu, jde o situaci, kdy se v clusteru nenašly hlasy, tedy je jedno, jakou váhou pak tyto žádné hlasy budu vážit
   
   #f_observed odhadneme na základě f_observed, e_observed, e_expected
-  #vysledky_clustery["f_observed"] = vysledky_clustery["f_expected"]*vysledky_clustery['e_observed']/vysledky_clustery['e_expected']
+  vysledky_clustery["f_observed"] = vysledky_clustery["f_expected"]*vysledky_clustery['e_observed']/vysledky_clustery['e_expected']
   
   
   # Vahy kde jsem delil nulou (zadna pozorovani v clusteru) nastavim na f (stejne pak nepribudou zadne hlasy z tohoto clusteru)
@@ -618,11 +617,11 @@ plot_list[["rychlost2"]]
 
 #cairo_pdf('/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori.pdf', family="DejaVu Sans")
 #pdf("/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
-pdf("/Users/User/Desktop/MFF/sfg_volby/test_aposteriori_upravene_ran_all_new1309.pdf", encoding="ISOLatin2.enc")
+pdf("obrazky/test_aposteriori_upravene_ran_all_new.pdf", encoding="ISOLatin2.enc")
 plot_list
 dev.off()
 
 
-save(vysledky_vse, vysledky_souboj, vetsina,vlada,rychlost,rychlost2, file = "aposteriori_analyza_data_upravene_ran_4.RData")
+save(vysledky_vse, vysledky_souboj, vetsina,vlada,rychlost,rychlost2, file = "vysledky/aposteriori_analyza_data_upravene_ran2.RData")
 
 #load("aposteriori_analyza_data.RData")

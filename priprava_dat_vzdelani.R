@@ -53,7 +53,7 @@ obce3_vzdelani<-rbind(obce3,zahranici)
 obce3_vzdelani[nrow(obce3_vzdelani),1]<-"Zahraničí"
 obce3_vzdelani[nrow(obce3_vzdelani),2:9]<-c(999997,em.out2$posterior[vzdelani4$uzemi_txt=="Praha 1",])
 # Ulozit
-save(obce3_vzdelani, file="ciselnik_vzdelani.RData")
+save(obce3_vzdelani, file="ciselniky/ciselnik_vzdelani.RData")
 
 ## VEK ####
 load("ciselniky/ciselnikKraje.RData")
