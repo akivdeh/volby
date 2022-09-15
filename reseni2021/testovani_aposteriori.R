@@ -20,11 +20,11 @@
     
     # Nacti
     #            load("/Users/admin/Desktop/reseni_0922/testovani/ciselnik17.RData")
-    load("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/ciselnik17.RData")
+    load("reseni2021/testovani/ciselnik17.RData")
     # Nacti
     #vstup <- read.table(paste0(paste0("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
     
-    vstup <- read.table(paste0(paste0("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
+    vstup <- read.table(paste0(paste0("reseni2021/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
     names(vstup) <- tolower(names(vstup))
     vstup[is.na(vstup)] <- 0
     
@@ -119,9 +119,9 @@
     ######## Kraje
     
     #            load("/Users/admin/Desktop/reseni_0922/testovani/ciselnikKraje.RData")
-    load("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/ciselnikKraje.RData")
+    load("reseni2021/testovani/ciselnikKraje.RData")
     # Nacti
-    vstup <- read.table(paste0(paste0("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
+    vstup <- read.table(paste0(paste0("reseni2021/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
     names(vstup) <- tolower(names(vstup))
     vstup[is.na(vstup)] <- 0
     
@@ -300,10 +300,10 @@ plot_list[["vetsina"]] <- ggplot(data=vetsina[(vetsina$koalice==1) & (vetsina$pr
 
 #cairo_pdf('/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori.pdf', family="DejaVu Sans")
 #pdf("/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
-pdf("/Users/User/Desktop/MFF/sfg_volby/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
+pdf("reseni2021/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
 plot_list
 dev.off()
 
-save(vysledky_vse, vysledky_souboj, vetsina, file = "aposteriori_analyza_data_upravene.RData")
+save(vysledky_vse, vysledky_souboj, vetsina, file = "reseni2021/aposteriori_analyza_data_upravene.RData")
 
 #load("aposteriori_analyza_data.RData")

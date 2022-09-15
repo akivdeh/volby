@@ -11,13 +11,13 @@ library(RJSONIO)
 rm(list=ls());
 
 #workdir <- "/Users/admin/Desktop/reseni_0922/"
-workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
+#workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
 
 ### Nahrani dat
 
-load(paste0(workdir, "ciselnik.RData"))
+load("reseni2021/ciselnik.RData")
 
-f <- file(paste0(workdir, "psp17okrs.txt"))
+f <- file("reseni2021/psp17okrs.txt")
 #f <- file(paste0(workdir, "psp17okrs.txt"))
 #f <- file("stdin")
 #open(f, mode = "r")

@@ -6,11 +6,11 @@
 rm(list=ls());
 
 #workdir <- "/Users/admin/Desktop/reseni_0922/"
-workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
+#workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
 
 # Nahrani dat
-obce <- read.table(paste0(workdir, "pscoco.csv"), sep=";", header=T);
-okrsky <- read.table(paste0(workdir, "psp17okrs.csv"), sep=",", header=T);
+obce <- read.table("reseni2021/pscoco.csv", sep=";", header=T);
+okrsky <- read.table("reseni2021/psp17okrs.csv", sep=",", header=T);
 
 # Manipulace s daty
 okrsky[is.na(okrsky)] <- 0;
@@ -44,5 +44,5 @@ names(ciselnik_okrsky) <- c("cis_obec", "cis_okrsek", "vel_okrsek", temp_comp)
 ciselnik_okrsky$id <- paste0(ciselnik_okrsky$cis_obec, ciselnik_okrsky$cis_okrsek)
 
 # Ulozit
-save(ciselnik_okrsky, file=paste0(workdir, "ciselnik.RData"))
+save(ciselnik_okrsky, file=paste0(workdir, "reseni2021/ciselnik.RData"))
 
