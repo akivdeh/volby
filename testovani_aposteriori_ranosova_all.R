@@ -1,10 +1,16 @@
 
+### Většina ve sněmovně
+
+vysledky_vetsina = vysledky_vse
+vysledky_vetsina["koalice"] = (vysledky_vetsina$strana=="kstrana_13") + (vysledky_vetsina$strana=="kstrana_17")
+
 #Sys.setlocale(category = 'LC_CTYPE','en_US.UTF-8')
 
 rm(list=ls());
 
 library(reshape2)
-workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
+#workdir <- "/Users/User/Desktop/MFF/sfg_volby/reseni_0922/"
+#workdir <- "reseni_2021/"
 
 ###### Set up #####
 
@@ -12,7 +18,7 @@ start <- 5
 stop <- 100
 
 vstup_vse<-read.table("pscr_2021.csv", sep=",", header = T)
-old <- read.table(paste0(workdir, "psp17okrs.csv"), sep=",", header=T);
+old <- read.table("reseni2021/psp17okrs.csv", sep=",", header=T);
 
 vstup_vse[is.na(vstup_vse)] <- 0
 old[is.na(old)] <- 0
@@ -66,7 +72,7 @@ for (procent_secteno in seq(start, stop, by=5)) {
   
   # Nacti
   #            load("/Users/admin/Desktop/reseni_0922/testovani/ciselnik17.RData")
-  load("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/ciselnik17.RData")
+  load("ciselniky/ciselnik17.RData")
   # Nacti
   #vstup <- read.table(paste0(paste0("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
   
@@ -164,7 +170,7 @@ for (procent_secteno in seq(start, stop, by=5)) {
   ######## Kraje #####
   
   #            load("/Users/admin/Desktop/reseni_0922/testovani/ciselnikKraje.RData")
-  load("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/ciselnikKraje.RData")
+  load("ciselniky/ciselnikKraje.RData")
   # Nacti
   #vstup <- read.table(paste0(paste0("/Users/User/Desktop/MFF/sfg_volby/reseni_0922/testovani/secteno_upravene/secteno", as.character(procent_secteno)), ".csv"), sep=",", header = T)
 
@@ -483,7 +489,6 @@ plot_list[["souboj"]] <- ggplot(data=vysledky_souboj[vysledky_souboj$procent_sec
   geom_hline(yintercept = 0) + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
-
 ### Většina ve sněmovně
 
 vysledky_vetsina = vysledky_vse
@@ -558,7 +563,7 @@ plot_list[["vlada"]] <- ggplot(data=vlada[(vlada$koalice==1) & (vlada$procent_se
 ### Rychlost konvergence - l^2 
 
 
-vysledky_rychlost= vysledky_vse[vysledky_vse$strana %in% strany21,]
+vysledky_rychlost= vysledky_vse #[vysledky_vse$strana %in% strany21,]
 
 vysledky_rychlost["vysledek"]=rep(vysledky_rychlost[vysledky_rychlost$procent_secteno==100,"aktualne"],times=20)
 vysledky_rychlost["rozdil_strata"] = vysledky_rychlost$predikce_strata-vysledky_rychlost$vysledek
@@ -589,7 +594,7 @@ plot_list[["rychlost"]]
 ### Rychlost konvergence - prumer
 
 
-vysledky_rychlost2= vysledky_vse[vysledky_vse$strana %in% strany21,]
+vysledky_rychlost2= vysledky_vse #[vysledky_vse$strana %in% strany21,]
 
 vysledky_rychlost2["vysledek"]=rep(vysledky_rychlost[vysledky_rychlost$procent_secteno==100,"aktualne"],times=20)
 vysledky_rychlost2["rozdil_strata"] = abs(vysledky_rychlost$predikce_strata-vysledky_rychlost$vysledek)
