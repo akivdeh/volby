@@ -1,9 +1,3 @@
-
-### Většina ve sněmovně
-
-vysledky_vetsina = vysledky_vse
-vysledky_vetsina["koalice"] = (vysledky_vetsina$strana=="kstrana_13") + (vysledky_vetsina$strana=="kstrana_17")
-
 #Sys.setlocale(category = 'LC_CTYPE','en_US.UTF-8')
 
 rm(list=ls());
@@ -412,8 +406,8 @@ for(k in 1:length(tabulka_strany$strany21)){
   
   plot <- ggplot(data=vysledky_plot[vysledky_plot$procent_secteno>=5, ])+
     geom_line(aes(x=procent_secteno/100, y=aktualne, color="Aktualne")) + 
-    geom_line(aes(x=procent_secteno/100, y=predikce_strata, color="Predikce strata"),size=1.2) +
-    geom_line(aes(x=procent_secteno/100, y=predikce_kraje, color="Predikce kraje")) + 
+    geom_line(aes(x=procent_secteno/100, y=predikce_strata, color="Predikce strata (volby 2017)"),size=1.2) +
+    geom_line(aes(x=procent_secteno/100, y=predikce_kraje, color="Predikce strata (kraje)")) + 
     geom_line(aes(x=procent_secteno/100, y=predikce_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype = 2) +
     geom_line(aes(x=procent_secteno/100, y=predikce_naivni_procenta, color="Predikce naivni (procenta)"),linetype = 2) +
     ggtitle(tabulka_strany$jmena[k]) +
@@ -421,7 +415,8 @@ for(k in 1:length(tabulka_strany$strany21)){
     scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
     scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
     #geom_hline(yintercept = 0.05) + #opravit tabulka_strany$barvy[tabulka_strany$strany21==strana]
-    xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
+    xlab("Procent okrsku secteno") + ylab("") + labs(color = "") +
+    scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
     theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
   
   if (!tabulka_strany$velke[k]){
@@ -430,26 +425,6 @@ for(k in 1:length(tabulka_strany$strany21)){
   plot_list[[strana]] <- plot
 }
 plot_list[["kstrana_13"]]
-
-# 
-# plot_list[["kstrana_20"]] <-  plot_list[["kstrana_20"]]+
-#   scale_color_discrete_sequential(palette = "Teal", nmax=7,order=7:1)
-# plot_list[["kstrana_13"]] <-  plot_list[["kstrana_13"]]+
-#   scale_color_discrete_sequential(palette = "Blues 3", nmax=7,order=7:1)
-# plot_list[["kstrana_17"]] <-  plot_list[["kstrana_17"]]+
-#   scale_color_discrete_sequential(palette = "YlGn", nmax=7,order=7:1)
-# plot_list[["kstrana_4"]] <-  plot_list[["kstrana_4"]]+
-#   scale_color_discrete_sequential(palette = "YlGn", nmax=7,order=7:1)
-# 
-# plot_list[["kstrana_5"]] <-  plot_list[["kstrana_5"]]+
-#   scale_color_discrete_sequential(palette = "Oranges", nmax=7,order=7:1)
-# plot_list[["kstrana_18"]] <-  plot_list[["kstrana_18"]]+
-#   scale_color_discrete_sequential(palette = "Red-Yellow", nmax=7,order=7:1)
-# plot_list[["kstrana_12"]] <-  plot_list[["kstrana_12"]]+
-#   scale_color_discrete_sequential(palette = "Blues 2", nmax=7,order=7:1)
-# plot_list[["kstrana_8"]] <-  plot_list[["kstrana_8"]]+
-#   scale_color_discrete_sequential(palette = "Plasma", nmax=7,order=7:1)
-# 
 
 # plot_list = list()
 # 
@@ -477,8 +452,8 @@ vysledky_souboj["predikce_naivni_procenta"] = vysledky_souboj["predikce_naivni_p
 vysledky_souboj["aktualne"] = vysledky_souboj["aktualne_ano"] - vysledky_souboj["aktualne_spolu"]
 
 plot_list[["souboj"]] <- ggplot(data=vysledky_souboj[vysledky_souboj$procent_secteno>=5, ])+
-  geom_line(aes(x=procent_secteno/100, y=predikce_strata, color="Predikce strata"),size=1.2) +
-  geom_line(aes(x=procent_secteno/100, y=predikce_kraje, color="Predikce kraje")) + 
+  geom_line(aes(x=procent_secteno/100, y=predikce_strata, color="Predikce strata (volby 2017)"),size=1.2) +
+  geom_line(aes(x=procent_secteno/100, y=predikce_kraje, color="Predikce strata (kraje)")) + 
   geom_line(aes(x=procent_secteno/100, y=predikce_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype = 2) +
   geom_line(aes(x=procent_secteno/100, y=predikce_naivni_procenta, color="Predikce naivni (procenta)"),linetype = 2) + 
   geom_line(aes(x=procent_secteno/100, y=aktualne, color="Aktualne")) + 
@@ -487,6 +462,7 @@ plot_list[["souboj"]] <- ggplot(data=vysledky_souboj[vysledky_souboj$procent_sec
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
   geom_hline(yintercept = 0) + 
+  scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
 ### Většina ve sněmovně
@@ -511,8 +487,8 @@ vetsina["pomer_predikce_naivni_procenta"] = vetsina["predikce_naivni_procenta_ad
 vetsina["pomer_aktualne"] = vetsina["aktualne_adj"]/vetsina["aktualne_celkem"]
 
 plot_list[["vetsina"]] <- ggplot(data=vetsina[(vetsina$koalice==1) & (vetsina$procent_secteno>=5), ])+
-  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_strata, color="Predikce strata"),size=1.2) + 
-  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_kraje, color="Predikce kraje")) + 
+  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_strata, color="Predikce strata (volby 2017)"),size=1.2) + 
+  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_kraje, color="Predikce strata (kraje)")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype = 2) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_naivni_procenta, color="Predikce naivni (procenta)"),linetype = 2) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_aktualne, color="Aktualne")) + 
@@ -520,6 +496,7 @@ plot_list[["vetsina"]] <- ggplot(data=vetsina[(vetsina$koalice==1) & (vetsina$pr
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("Pomer hlasu") + labs(color = "") + 
+  scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
   geom_hline(yintercept = 0.5) + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
@@ -548,8 +525,8 @@ vlada["pomer_predikce_naivni_procenta"] = vlada["predikce_naivni_procenta_adj"]/
 vlada["pomer_aktualne"] = vlada["aktualne_adj"]/vlada["aktualne_celkem"]
 
 plot_list[["vlada"]] <- ggplot(data=vlada[(vlada$koalice==1) & (vlada$procent_secteno>=5), ])+
-  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_strata, color="Predikce strata"),size=1.2) + 
-  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_kraje, color="Predikce kraje")) + 
+  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_strata, color="Predikce strata (volby 2017)"),size=1.2) + 
+  geom_line(aes(x=procent_secteno/100, y=pomer_predikce_kraje, color="Predikce strata (kraje)")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype=2) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_naivni_procenta, color="Predikce naivni (procenta)"),linetype=2) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_aktualne, color="Aktualne")) + 
@@ -558,6 +535,7 @@ plot_list[["vlada"]] <- ggplot(data=vlada[(vlada$koalice==1) & (vlada$procent_se
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("Pomer hlasu") + labs(color = "") + 
   geom_hline(yintercept = 0.5) + 
+  scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
 ### Rychlost konvergence - l^2 
@@ -577,14 +555,15 @@ normF<-function(x){ norm(matrix(x,nrow=1),type="F")}
 rychlost = aggregate(cbind(rozdil_strata,rozdil_kraje,rozdil_naivni_okrsky,rozdil_naivni_procenta,rozdil_aktualne) ~ procent_secteno,vysledky_rychlost,  FUN=normF)
 
 plot_list[["rychlost"]] <- ggplot(data=rychlost)+
-  geom_line(aes(x=procent_secteno/100, y=rozdil_strata, color="Predikce strata"),size=1.2) + 
-  geom_line(aes(x=procent_secteno/100, y=rozdil_kraje, color="Predikce kraje")) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_strata, color="Predikce strata (volby 2017)"),size=1.2) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_kraje, color="Predikce strata (kraje)")) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype=2) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_naivni_procenta, color="Predikce naivni (procenta)"),linetype=2) +
-  geom_line(aes(x=procent_secteno/100, y=rozdil_aktualne, color="Aktualni vysledky"),) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_aktualne, color="Aktualne"),) + 
   ggtitle("Vzdalenost vysledku pro ruzne metody") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
+  scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
   xlab("Procent okrsku secteno") + ylab("Vzdalenost") + labs(color = "") + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
@@ -594,35 +573,30 @@ plot_list[["rychlost"]]
 ### Rychlost konvergence - prumer
 
 
-vysledky_rychlost2= vysledky_vse #[vysledky_vse$strana %in% strany21,]
-
-vysledky_rychlost2["vysledek"]=rep(vysledky_rychlost[vysledky_rychlost$procent_secteno==100,"aktualne"],times=20)
-vysledky_rychlost2["rozdil_strata"] = abs(vysledky_rychlost$predikce_strata-vysledky_rychlost$vysledek)
-vysledky_rychlost2["rozdil_kraje"] =  abs(vysledky_rychlost$predikce_kraje-vysledky_rychlost$vysledek)
-vysledky_rychlost2["rozdil_naivni_okrsky"] = abs(vysledky_rychlost$predikce_naivni_okrsky-vysledky_rychlost$vysledek)
-vysledky_rychlost2["rozdil_naivni_procenta"] =  abs(vysledky_rychlost$predikce_naivni_procenta-vysledky_rychlost$vysledek)
-vysledky_rychlost2["rozdil_aktualne"] =  abs(vysledky_rychlost$aktualne-vysledky_rychlost$vysledek)
+vysledky_rychlost2= vysledky_rychlost #[vysledky_vse$strana %in% strany21,]
+vysledky_rychlost2[,2:13]=abs(vysledky_rychlost2[,2:13])
 
 rychlost2 = aggregate(cbind(rozdil_strata,rozdil_kraje,rozdil_naivni_okrsky,rozdil_naivni_procenta,rozdil_aktualne) ~ procent_secteno,vysledky_rychlost2,  FUN=mean)
 
 plot_list[["rychlost2"]] <- ggplot(data=rychlost2)+
-  geom_line(aes(x=procent_secteno/100, y=rozdil_strata, color="Predikce strata"),size=1.2) + 
-  geom_line(aes(x=procent_secteno/100, y=rozdil_kraje, color="Predikce kraje")) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_strata, color="Predikce strata (volby 2017)"),size=1.2) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_kraje, color="Predikce strata (kraje)")) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_naivni_okrsky, color="Predikce naivni (okrsky)"),linetype=2) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_naivni_procenta, color="Predikce naivni (procenta)"),linetype=2) +
-  geom_line(aes(x=procent_secteno/100, y=rozdil_aktualne, color="Aktualni vysledky"),) + 
+  geom_line(aes(x=procent_secteno/100, y=rozdil_aktualne, color="Aktualne"),) + 
   ggtitle("Průměrná chyba pro ruzne metody") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("Vzdalenost") + labs(color = "") + 
+  scale_color_hue(limits=c("Aktualne","Predikce strata (volby 2017)", "Predikce strata (kraje)","Predikce naivni (okrsky)","Predikce naivni (procenta)")) +
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
-plot_list[["rychlost2"]]
+plot_list[["rychlost"]]
 
 
 #cairo_pdf('/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori.pdf', family="DejaVu Sans")
 #pdf("/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
-pdf("obrazky/test_aposteriori_upravene_ran_all_new.pdf", encoding="ISOLatin2.enc")
+pdf("obrazky/test_aposteriori_upravene_ran_all_new3.pdf", encoding="ISOLatin2.enc")
 plot_list
 dev.off()
 
