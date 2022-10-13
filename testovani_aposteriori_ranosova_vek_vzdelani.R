@@ -359,7 +359,7 @@ library(scales)
 #                   "kstrana_4", "kstrana_5", "kstrana_18",
 #                   "kstrana_12", "kstrana_8", "kstrana_1")
 velke_strany<-c("kstrana_13", "kstrana_17", "kstrana_20", "kstrana_4")
-male_strany<-c("kstrana_5", "kstrana_18","kstrana_12", "kstrana_8")
+male_strany<-c("kstrana_5", "kstrana_18","kstrana_12")
 strany<-c(velke_strany,male_strany)  
 
 
@@ -408,19 +408,42 @@ for(strana in strany){
     #geom_hline(yintercept = pruzkum[[strana]],linetype = 2)+
     scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
     scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
-    scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
+    scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
     #geom_hline(yintercept = 0.05) + #opravit
     xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
     theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
     if (strana %in% male_strany){
     plot<-plot+ geom_hline(yintercept = 0.05)
-  }
+    }
+    if (strana=="kstrana_8"){
+      plot<-plot+ geom_hline(yintercept = 0.03)
+    }
   
   plot_list[[strana]] <- plot
 }
-plot_list[["kstrana_17"]]
+plot_list[["kstrana_8"]]
 
+# 
+# par(mfrow=c(2,2))
+# show_col(hue_pal(h=c(0,180)+15)(3))
+# show_col(hue_pal(h=c(90,270)+15)(3))
+# show_col(hue_pal(h=c(180,360)+15)(3))
+# 
+# show_col(hue_pal(h=c(270,360)+15)(2))
+# show_col(hue_pal()(1))
+# 
+# par(mfrow=c(1,2))
+# show_col(hue_pal(h=c(0,360)+15)(5))
+# show_col(hue_pal(h=c(0,216)+15)(4))
+# 
+# show_col(hue_pal(h=c(180,360)+15)(3))
+# 
+# show_col(hue_pal(h=c(270,360)+15)(2))
+# show_col(hue_pal()(1))
 
+# 
+# show_col(hue_pal()(5)[1:4])
+# show_col(hue_pal(h = c(0, 214)+15)(4))
 
 
 ### Souboj ANO/SPOLU
@@ -446,7 +469,7 @@ plot_list[["souboj"]] <- ggplot(data=vysledky_souboj[vysledky_souboj$procent_sec
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
-  scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
+scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
   geom_hline(yintercept = 0) + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
@@ -476,15 +499,15 @@ plot_list[["vetsina"]] <- ggplot(data=vetsina[(vetsina$koalice==1) & (vetsina$pr
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vek, color="Predikce vek")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vzdelani, color="Predikce vzdelani")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_aktualne, color="Aktualne")) + 
-  ggtitle("Koalice proti zbytku: pomer hlasu pro SPOLU+PirSTAN ve snemovne") +
+  ggtitle("Koalice proti zbytku: SPOLU+PirSTAN") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
   geom_hline(yintercept = 0.5) + 
-  scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
+scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
-
+plot_list[["vetsina"]]
 
 ### Bývalá vladní většina ve sněmovně (ANO, CSSD, KSCM)
 
@@ -515,7 +538,7 @@ plot_list[["vlada"]] <- ggplot(data=vlada[(vlada$koalice==1) & (vlada$procent_se
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
-  scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
+scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
   geom_hline(yintercept = 0.5) + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
@@ -543,8 +566,8 @@ plot_list[["rychlost"]] <- ggplot(data=rychlost)+
   ggtitle("Vzdalenost vysledku pro ruzne metody") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
-  xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
-  scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
+  xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + geom_hline(yintercept = 0) + 
+scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
 
@@ -566,18 +589,22 @@ plot_list[["rychlost2"]] <- ggplot(data=rychlost2)+
   ggtitle("Průměrná chyba pro ruzne metody") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
-  scale_color_hue(limits=c("Aktualne","Predikce volby 2017", "Predikce vek","Predikce vzdelani")) +
-  xlab("Procent okrsku secteno") + ylab("Vzdalenost") + labs(color = "") + 
+  scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
+  xlab("Procent okrsku secteno") + ylab("Vzdalenost") + labs(color = "") + geom_hline(yintercept = 0) + 
   theme(legend.position = "bottom")+guides(color=guide_legend(nrow=2,byrow=FALSE))
 
 plot_list[["rychlost2"]]
 
 
+# pdf("obrazky/pokus.pdf", encoding="ISOLatin2.enc",width=5,height = 5)
+# plot_list[["rychlost2"]]
+# dev.off()
+
 
 
 
 #pdf("/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
-pdf("obrazky/test_aposteriori_upravene_ran_VV3.pdf", encoding="ISOLatin2.enc")
+pdf("obrazky/test_aposteriori_upravene_ran_VV_final.pdf", encoding="ISOLatin2.enc",width=5,height = 5)
 plot_list
 dev.off()
 
