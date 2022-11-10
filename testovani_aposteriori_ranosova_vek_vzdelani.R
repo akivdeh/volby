@@ -360,13 +360,13 @@ library(scales)
 #                   "kstrana_12", "kstrana_8", "kstrana_1")
 velke_strany<-c("kstrana_13", "kstrana_17", "kstrana_20", "kstrana_4")
 male_strany<-c("kstrana_5", "kstrana_18","kstrana_12")
-strany<-c(velke_strany,male_strany)  
+strany<-c(velke_strany,male_strany,"kstrana_8")  
 
 
 nazvy_strany <- list()
 
 nazvy_strany[["kstrana_13"]] = "SPOLU" #velke strany
-nazvy_strany[["kstrana_17"]] = "PirSTAN"
+nazvy_strany[["kstrana_17"]] = "PirStan"
 nazvy_strany[["kstrana_20"]] = "ANO"
 nazvy_strany[["kstrana_4"]] = "SPD"
 
@@ -499,7 +499,7 @@ plot_list[["vetsina"]] <- ggplot(data=vetsina[(vetsina$koalice==1) & (vetsina$pr
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vek, color="Predikce vek")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vzdelani, color="Predikce vzdelani")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_aktualne, color="Aktualne")) + 
-  ggtitle("Koalice proti zbytku: SPOLU+PirSTAN") +
+  ggtitle("Koalice proti zbytku: SPOLU+PirStan") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
@@ -534,7 +534,7 @@ plot_list[["vlada"]] <- ggplot(data=vlada[(vlada$koalice==1) & (vlada$procent_se
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vek, color="Predikce vek")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_predikce_vzdelani, color="Predikce vzdelani")) + 
   geom_line(aes(x=procent_secteno/100, y=pomer_aktualne, color="Aktualne")) + 
-  ggtitle("Strany minulé vládní většiny: ANO, ČSSD, KSČM") +
+  ggtitle("Strany minule vladni vetsiny: ANO, CSSD, KSCM") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   xlab("Procent okrsku secteno") + ylab("") + labs(color = "") + 
@@ -586,7 +586,7 @@ plot_list[["rychlost2"]] <- ggplot(data=rychlost2)+
   geom_line(aes(x=procent_secteno/100, y=rozdil_vek, color="Predikce vek")) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_vzdelani, color="Predikce vzdelani")) + 
   geom_line(aes(x=procent_secteno/100, y=rozdil_aktualne, color="Aktualne")) + 
-  ggtitle("Průměrná chyba pro ruzne metody") +
+  ggtitle("Prumerna chyba pro ruzne metody") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
   scale_x_continuous(labels=scales::percent_format(accuracy = 1L), breaks = seq(0.05, 1, by=0.1)) +
   scale_color_hue(h = c(0, 215) + 15,limits=c("Aktualne", "Predikce vek","Predikce vzdelani","Predikce volby 2017")) +
@@ -604,7 +604,7 @@ plot_list[["rychlost2"]]
 
 
 #pdf("/Users/admin/Documents/volebni_predikce/testovani/test_aposteriori_upravene.pdf", encoding="ISOLatin2.enc")
-pdf("obrazky/test_aposteriori_upravene_ran_VV_final.pdf", encoding="ISOLatin2.enc",width=5,height = 5)
+pdf("obrazky/test_aposteriori_upravene_ran_VV_final.pdf", encoding="ISOLatin2.enc",width=6.5,height = 5)
 plot_list
 dev.off()
 
