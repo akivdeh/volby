@@ -507,7 +507,7 @@ plot_list[["souboj"]] <- ggplot(data=vysledky_souboj[vysledky_souboj$procent_sec
   geom_line(aes(x=procent_secteno/100, y=predikce_strata, color="Predikce PSP volby 2017"),size=1.2) +
   geom_line(aes(x=procent_secteno/100, y=predikce_kraje, color="Predikce kraje")) + 
   geom_line(aes(x=procent_secteno/100, y=predikce_vek, color="Predikce vek")) +
-  geom_line(aes(x=procent_secteno/100, y=predikce_vek, color="Predikce vzdelani")) + 
+  geom_line(aes(x=procent_secteno/100, y=predikce_vzdelani, color="Predikce vzdelani")) + 
   geom_line(aes(x=procent_secteno/100, y=aktualne, color="Aktualne")) + 
   ggtitle("Rozdil obdrzenych procent pro Zemana a Drahose") +
   scale_y_continuous(labels=scales::percent_format(accuracy = 0.1L)) +
