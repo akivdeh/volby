@@ -30,7 +30,7 @@ tabulka_kandidati<-as.data.frame(cbind(jmena,kandidati))
 ###### Spustit predikci ###### 
 vysledky_vse = data.frame(kandidat=character(), aktualne=numeric(), predikce_strata=numeric(),predikce_kraje=numeric(), predikce_vek=numeric(),predikce_vzdelani=numeric(), procent_secteno=numeric())
 
-procent_secteno<-15
+#procent_secteno<-15
 
 for (procent_secteno in seq(start, stop, by=5)) {
   ######## 
@@ -91,6 +91,7 @@ for (procent_secteno in seq(start, stop, by=5)) {
   
   
   vysledky_clustery = aggregate(. ~ cluster_name, data_melted[, c("cluster_name", "f_expected", "e_expected", "e_observed", name_kandidat)], sum)
+  
   #vysledky_clustery[vysledky_clustery["e_expected"]==0, 'e_expected'] = 1 #můžu dát libovolnou hodnotu, jde o situaci, kdy se v clusteru nenašly hlasy, tedy je jedno, jakou váhou pak tyto žádné hlasy budu vážit
   
   #f_observed odhadneme na základě f_observed, e_observed, e_expected
@@ -101,7 +102,7 @@ for (procent_secteno in seq(start, stop, by=5)) {
   vysledky_clustery[vysledky_clustery$e_observed==0, 'e_observed'] = 1
   
   vysledky_clustery$vaha = (vysledky_clustery$f_observed/vysledky_clustery$e_observed)#*(volicu_celkem/volicu_secteno)# konstantu zanedbáme
-  
+  vysledky_clustery_volby<-vysledky_clustery
   # Navážit a sečíst
   pom = colSums(vysledky_clustery[, name_kandidat]*vysledky_clustery$vaha)
   vysledky = data.frame(pom, row.names=name_kandidat)
@@ -438,7 +439,7 @@ for (procent_secteno in seq(start, stop, by=5)) {
   
 }
 
-
+#save(vysledky_clustery_volby,file="prezident2018/vysledky_clustery.RData")
 
 
 ##### Zobrazení výsledků  #####
